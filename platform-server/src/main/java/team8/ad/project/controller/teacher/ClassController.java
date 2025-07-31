@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team8.ad.project.entity.dto.ClassDTO;
 import team8.ad.project.result.Result;
-import team8.ad.project.serivice.teacher.ClassService;
+import team8.ad.project.service.teacher.ClassService;
 
 @RestController
 @RequestMapping("/admin/common")

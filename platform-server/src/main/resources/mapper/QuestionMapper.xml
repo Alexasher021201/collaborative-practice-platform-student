@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team8.ad.project.mapper.QuestionMapper">
+
+    <select id="searchQuestions" resultType="team8.ad.project.vo.Question">
+        SELECT id, image, question, choices, answer, hint, task, grade, subject, topic, category, skill, lecture, solution
+        FROM qa
+        WHERE (question LIKE CONCAT('%', #{keyword}, '%')
+            OR hint LIKE CONCAT('%', #{keyword}, '%'))
+            <if test="questionName != null and questionName != ''">
+                AND question LIKE CONCAT('%', #{questionName}, '%')
+            </if>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="countQuestions" resultType="int">
+        SELECT COUNT(*)
+        FROM qa
+        WHERE (question LIKE CONCAT('%', #{keyword}, '%')
+            OR hint LIKE CONCAT('%', #{keyword}, '%'))
+            <if test="questionName != null and questionName != ''">
+                AND question LIKE CONCAT('%', #{questionName}, '%')
+            </if>
+    </select>
+
+</mapper>

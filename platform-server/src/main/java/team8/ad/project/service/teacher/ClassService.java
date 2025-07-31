@@ -1,4 +1,4 @@
-package team8.ad.project.serivice.teacher;
+package team8.ad.project.service.teacher;
 
 import team8.ad.project.entity.dto.ClassDTO;
 

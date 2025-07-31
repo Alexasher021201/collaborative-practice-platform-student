@@ -121,6 +121,24 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
         </dependency>
+        <!-- Apache Parquet -->
+    <dependency>
+        <groupId>org.apache.parquet</groupId>
+        <artifactId>parquet-hadoop</artifactId>
+        <version>1.13.1</version>
+    </dependency>
+    <!-- Hadoop Common -->
+    <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-common</artifactId>
+        <version>3.3.6</version>
+    </dependency>
+    <!-- MySQL JDBC 驱动 -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.33</version>
+    </dependency>
     </dependencies>
 
     <build>
