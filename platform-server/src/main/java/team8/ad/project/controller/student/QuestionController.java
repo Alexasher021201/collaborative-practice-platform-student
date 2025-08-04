@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.dto.QsResultDTO;
+import team8.ad.project.entity.dto.SelectQuestionDTO;
 import team8.ad.project.result.Result;
 import team8.ad.project.service.question.QuestionService;
 
@@ -44,4 +45,11 @@ public class QuestionController {
         }
         return Result.success(dto);
     }
+
+    @GetMapping("/doquestion")
+    @ApiOperation("查看具体题目并做题")
+    public Result<SelectQuestionDTO> selectQuestion(@ApiParam(value = "题目序号", required=true,defaultValue = "1") @RequestParam int id){
+        
+    }
+    
 }
