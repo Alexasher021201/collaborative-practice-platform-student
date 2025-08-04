@@ -48,8 +48,13 @@ public class QuestionController {
 
     @GetMapping("/doquestion")
     @ApiOperation("查看具体题目并做题")
-    public Result<SelectQuestionDTO> selectQuestion(@ApiParam(value = "题目序号", required=true,defaultValue = "1") @RequestParam int id){
-        
+    public Result<SelectQuestionDTO> selectQuestion(@ApiParam(value = "题目序号", required = true, defaultValue = "1") @RequestParam int id) {
+        log.info("查看具体题目: id={}", id);
+        SelectQuestionDTO dto = questionService.getQuestionById(id);
+        if (dto == null) {
+            return Result.error("题目不存在");
+        }
+        return Result.success(dto);
     }
     
 }
