@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import team8.ad.project.entity.dto.AnswerRecordDTO;
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.dto.QsResultDTO;
 import team8.ad.project.entity.dto.SelectQuestionDTO;
@@ -56,5 +57,25 @@ public class QuestionController {
         }
         return Result.success(dto);
     }
-    
+
+    @GetMapping("/answerQuestion")
+    @ApiOperation("提交答题结果")
+    public Result<String> answerQuestion(
+            @ApiParam(value = "题目ID", required = true, defaultValue = "1") @RequestParam Integer id,
+            @ApiParam(value = "正确性(0错,1对)", required = true, defaultValue = "0") @RequestParam Integer correct,
+            @ApiParam(value = "答案", required = false) @RequestParam(required = false) Integer param) {
+        log.info("提交答题: id={}, correct={}, param={}", id, correct, param);
+        if (id == null || correct == null) {
+            return Result.error("题目ID和正确性不能为空");
+        }
+        if (correct != 0 && correct != 1) {
+            return Result.error("correct 值必须为 0 或 1");
+        }
+        AnswerRecordDTO dto = new AnswerRecordDTO();
+        dto.setId(id);
+        dto.setCorrect(correct);
+        dto.setParam(param);
+        boolean success = questionService.saveAnswerRecord(dto);
+        return success ? Result.success("答题记录保存成功") : Result.error("答题记录保存失败");
+    }
 }

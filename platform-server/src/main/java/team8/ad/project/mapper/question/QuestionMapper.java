@@ -1,11 +1,13 @@
 package team8.ad.project.mapper.question;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.dto.SelectQuestionDTO;
+import team8.ad.project.entity.entity.AnswerRecord;
 
 import java.util.List;
 
@@ -33,4 +35,8 @@ public interface QuestionMapper {
 
     @Select("SELECT id, image, question, choices, answer FROM qa WHERE id = #{id}")
     SelectQuestionDTO getQuestionById(@Param("id") int id);
+
+    @Insert("INSERT INTO student_answer_record (student_id, question_id, is_correct, answer) " +
+        "VALUES (#{record.studentId}, #{record.questionId}, #{record.isCorrect}, #{record.answer})")int saveAnswerRecord(@Param("record") AnswerRecord record);
+
 }
