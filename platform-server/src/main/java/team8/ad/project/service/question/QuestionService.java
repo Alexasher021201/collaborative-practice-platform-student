@@ -3,6 +3,7 @@ package team8.ad.project.service.question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team8.ad.project.entity.dto.QsResultDTO;
+import team8.ad.project.entity.dto.SelectQuestionDTO;
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.entity.Question;
 import team8.ad.project.mapper.question.QuestionMapper;
@@ -43,5 +44,9 @@ public class QuestionService {
             result.setErrorMessage(e.getMessage());
         }
         return result;
+    }
+
+    public SelectQuestionDTO getQuestionById(int id) {
+        return questionMapper.getQuestionById(id);
     }
 }
