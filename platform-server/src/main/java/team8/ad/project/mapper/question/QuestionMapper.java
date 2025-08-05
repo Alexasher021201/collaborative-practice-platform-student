@@ -1,12 +1,15 @@
 package team8.ad.project.mapper.question;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.dto.SelectQuestionDTO;
+import team8.ad.project.entity.entity.AnswerRecord;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -33,4 +36,10 @@ public interface QuestionMapper {
 
     @Select("SELECT id, image, question, choices, answer FROM qa WHERE id = #{id}")
     SelectQuestionDTO getQuestionById(@Param("id") int id);
+
+    @Insert("INSERT INTO student_answer_record (student_id, question_id, is_correct, answer) " +
+        "VALUES (#{record.studentId}, #{record.questionId}, #{record.isCorrect}, #{record.answer})")int saveAnswerRecord(@Param("record") AnswerRecord record);
+
+    @Select("SELECT * FROM student_answer_record WHERE student_id = #{studentId} AND DATE(timestamp) = #{date}")
+    List<AnswerRecord> getRecordsByStudentAndDate(@Param("studentId") Long studentId, @Param("date") LocalDate date);
 }
