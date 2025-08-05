@@ -73,6 +73,7 @@ public class QuestionService {
 
         for (int i = 0; i < 7; i++) {
             LocalDate date = today.minusDays(i);
+            // TODO 把DEFAULT_STUDENT_ID换成BaseContext
             List<AnswerRecord> records = questionMapper.getRecordsByStudentAndDate(DEFAULT_STUDENT_ID, date);
             long total = records.size();
             long correct = records.stream().filter(r -> r.getIsCorrect() == 1).count();
