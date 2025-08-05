@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import team8.ad.project.entity.dto.AnswerRecordDTO;
+import team8.ad.project.entity.dto.DashboardDTO;
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.dto.QsResultDTO;
 import team8.ad.project.entity.dto.SelectQuestionDTO;
@@ -77,5 +78,13 @@ public class QuestionController {
         dto.setParam(param);
         boolean success = questionService.saveAnswerRecord(dto);
         return success ? Result.success("答题记录保存成功") : Result.error("答题记录保存失败");
+    }
+
+    @GetMapping("/dashboard")
+    @ApiOperation("获取过去7天的做题准确率")
+    public Result<DashboardDTO> getDashboard() {
+        log.info("获取仪表盘数据");
+        DashboardDTO dto = questionService.getDashboardData();
+        return dto != null ? Result.success(dto) : Result.error("无法获取仪表盘数据");
     }
 }
