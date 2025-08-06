@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Update;
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.dto.SelectQuestionDTO;
 import team8.ad.project.entity.entity.AnswerRecord;
+import team8.ad.project.entity.entity.Question;
 import team8.ad.project.entity.entity.StudentRecommendation;
 
 import java.time.LocalDate;
@@ -36,8 +37,11 @@ public interface QuestionMapper {
         @Param("category") String category
     );
 
+    // @Select("SELECT id, image, question, choices, answer FROM qa WHERE id = #{id}")
+    // SelectQuestionDTO getQuestionById(@Param("id") int id);
+
     @Select("SELECT id, image, question, choices, answer FROM qa WHERE id = #{id}")
-    SelectQuestionDTO getQuestionById(@Param("id") int id);
+    Question selectById(@Param("id") int id);
 
     @Insert("INSERT INTO student_answer_record (student_id, question_id, is_correct, answer) " +
         "VALUES (#{record.studentId}, #{record.questionId}, #{record.isCorrect}, #{record.answer})")int saveAnswerRecord(@Param("record") AnswerRecord record);

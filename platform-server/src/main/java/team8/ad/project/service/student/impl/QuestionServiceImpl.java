@@ -24,6 +24,7 @@ import team8.ad.project.entity.dto.AnswerRecordDTO;
 import team8.ad.project.entity.dto.DashboardDTO;
 import team8.ad.project.entity.dto.QsInform;
 import team8.ad.project.entity.entity.AnswerRecord;
+import team8.ad.project.entity.entity.Question;
 import team8.ad.project.entity.entity.StudentRecommendation;
 import team8.ad.project.mapper.question.QuestionMapper;
 import team8.ad.project.service.student.QuestionService;
@@ -78,9 +79,31 @@ public class QuestionServiceImpl implements QuestionService {
         return result;
     }
 
+    @Override
     public SelectQuestionDTO getQuestionById(int id) {
-        return questionMapper.getQuestionById(id);
+        Question question = questionMapper.selectById(id); // ✅ 改成用实体对象
+        if (question == null) return null;
+
+        SelectQuestionDTO dto = new SelectQuestionDTO();
+        dto.setId(question.getId());
+        dto.setImage(question.getImage());
+        dto.setQuestion(question.getQuestion());
+        dto.setAnswer(question.getAnswer());
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<String> parsed = mapper.readValue(
+                question.getChoices(), new TypeReference<List<String>>() {}
+            );
+            dto.setChoices(parsed);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dto.setChoices(List.of());
+        }
+
+        return dto;
     }
+
 
     public boolean saveAnswerRecord(AnswerRecordDTO dto) {
         Integer currentId = BaseContext.getCurrentId();
