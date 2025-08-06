@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -95,12 +96,13 @@ public class QuestionController {
         return dto != null ? Result.success(dto) : Result.error("无法获取仪表盘数据");
     }
 
-    @GetMapping("/recommend")
-    @ApiOperation("获取当前用户做题情况")
+    // 通过全局配置url:recommend-url:来与model建立联系，需要修改application-dev.xml中的recommend-url来与ml中的url对应
+    @PutMapping("/recommend")
+    @ApiOperation("触发模型，并向模型提供训练样本(题目)")
     public Result<RecommendationDTO> getRecommend() {
         log.info("获取推荐数据");
         RecommendationDTO dto = questionServiceImpl.getRecommendData();
-        return dto != null ? Result.success(dto) : Result.error("无法获取推荐数据");
+        return dto != null ? Result.success(dto) : Result.error("无法提供推荐数据");
     }
 
     @PostMapping("/recommendQuestion")

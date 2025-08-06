@@ -1,8 +1,15 @@
 package team8.ad.project.service.student.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
+
 import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +41,10 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private RestTemplate restTemplate;
+    @Value("${ml.recommend-url}")
+    private String mlRecommendUrl;
 
     private static final int PAGE_SIZE = 10; // 每页10个题目
     
@@ -122,6 +133,18 @@ public class QuestionServiceImpl implements QuestionService {
                     return item;
                 })
                 .collect(Collectors.toList()));
+        
+        // ✅ 触发 ML 模型调用
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<RecommendationDTO> request = new HttpEntity<>(dto, headers);
+            ResponseEntity<String> response = restTemplate.postForEntity(mlRecommendUrl, request, String.class);
+            log.info("ML服务响应: {}", response.getBody());
+        } catch (Exception e) {
+            log.error("调用ML推荐服务失败: {}", e.getMessage(), e);
+        }
+
         BaseContext.removeCurrentId();
         return dto;
     }

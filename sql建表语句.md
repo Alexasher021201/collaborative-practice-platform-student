@@ -1,3 +1,7 @@
+```sql
+create database collaborative_practice_platform;
+```
+
 ```sql 创建题目表
 CREATE TABLE qa (
     id INT PRIMARY KEY AUTO_INCREMENT,
