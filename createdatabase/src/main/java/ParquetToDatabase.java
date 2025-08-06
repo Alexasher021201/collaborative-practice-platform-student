@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//exec-maven-plugin
+//mvn exec:java
 
 public class ParquetToDatabase {
     public static List<Group> readParquetFile(String filePath) throws IOException {
