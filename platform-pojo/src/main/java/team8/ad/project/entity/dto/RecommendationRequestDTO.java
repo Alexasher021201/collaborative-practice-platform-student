@@ -7,4 +7,5 @@ import java.util.List;
 @Data
 public class RecommendationRequestDTO {
     private List<Long> questionIds; // 推荐的题目 ID 列表
+
 }
