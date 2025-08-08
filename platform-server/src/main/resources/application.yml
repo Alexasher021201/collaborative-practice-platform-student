@@ -2,8 +2,6 @@ server:
   port: 8080
 
 spring:
-  profiles:
-    active: dev
   main:
     allow-circular-references: true
   datasource:
@@ -14,7 +12,7 @@ spring:
       password: ${platform.datasource.password}
 
 ml:
-  recommend-url: http://localhost:5000/recommend
+  recommend-url: http://${python.service}:5000/recommend
 
 logging:
   level:
@@ -25,9 +23,7 @@ logging:
         controller: info
 
 mybatis:
-  #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: team8.ad.project.entity
   configuration:
-    #开启驼峰命名
     map-underscore-to-camel-case: true
